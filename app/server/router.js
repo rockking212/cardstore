@@ -251,10 +251,17 @@ res.render('final', { title: '念恋卡 - ', username:req.body.username, imagepa
 	});
 // show uploaded pic
 	app.post('/upload', function(req, res) {
-	    console.log(req.session.user.name);
+	console.log("test user comes!");
 //    console.log(req.body);
 //    console.log(req.files);
-
+	var username;
+	    if (req.session.user == null){
+		username = 'test_user';
+		}else
+			{
+		username = req.session.user.name;
+			}
+//	console.log(username);
 	var date = new Date();
 	var current_time = date.getYear() + '-' + date.getMonth() + '-' + date.getDate() + '-'+ date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 
@@ -263,14 +270,13 @@ res.render('final', { title: '念恋卡 - ', username:req.body.username, imagepa
 //    get the temporary location of the file
 
 	var tmp_path = req.files.upload.path;
-//	req.session.user.name = 'test';
 //    set where the file should actually exists - in this case it is in the "images" directory
-	var target_path = './app/public/uploads/' +req.session.user.name+'-'+current_time+'-'+req.files.upload.name;
+	var target_path = './app/public/uploads/' +username+'-'+current_time+'-'+req.files.upload.name;
 //    console.log(tmp_path);
 //    console.log( target_path);
 // move the file from the temporary location to the intended location
 	fs.rename(tmp_path, target_path, function(err) {
-    console.log( err);
+    	console.log( err);
 		if (err) throw err;
 
 // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
@@ -278,7 +284,7 @@ res.render('final', { title: '念恋卡 - ', username:req.body.username, imagepa
 		if (err) throw err;        
 	});
 
-	res.render('upload', { title: '念恋卡 ', username: req.session.user.name, imagepath: 'uploads/'+req.session.user.name+'-'+current_time+'-'+req.files.upload.name });
+	res.render('upload', { title: '念恋卡 ', username: username, imagepath: 'uploads/'+username+'-'+current_time+'-'+req.files.upload.name });
 
 });
         });
@@ -286,11 +292,20 @@ res.render('final', { title: '念恋卡 - ', username:req.body.username, imagepa
 
 // show cuted pic
 	app.post('/show', function(req, res) {
+	var username;
+	    if (req.session.user == null){
+		username = 'test_user';
+		}else
+			{
+username = req.session.user.name;
+			}
+//	console.log(username);
+
 		var img_source = './app/public/'+req.body.cut_s;
 		var cut_scale = req.body.cut_ow/500;
 		var date = new Date();
 		var current_time = '-'+date.getYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
-		var target_save = 'cut/'+req.session.user.name + current_time+'.jpg';
+		var target_save = 'cut/'+ username + current_time+'.jpg';
 //         console.log(current_time);   
 //		console.log(req.body);
 //		console.log(img_source);
@@ -301,7 +316,7 @@ res.render('final', { title: '念恋卡 - ', username:req.body.username, imagepa
 		res.write(stderr);
 		throw err;
 		}
-		res.render('show', { title: '念恋卡 ', username: req.session.user.name, imagepath: target_save, billid: req.session.user.name + current_time });
+		res.render('show', { title: '念恋卡 ', username: username, imagepath: target_save, billid: username + current_time });
 	});
 	});
 
