@@ -1,4 +1,4 @@
 *~
 app/public/cut/*
 app/public/uploads/*
-node_modules/*
+node_modules
