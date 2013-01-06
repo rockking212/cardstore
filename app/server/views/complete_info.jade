@@ -1,0 +1,57 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+include top
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : {}
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+div.container
+	form(method='post', action='/submit_bill', enctype='multipart/form-data')
+		div.row
+			div.span3
+				#logo-container
+		div.row
+			#top-sperater
+			div.span10
+				h1 完成了 
+			div.span2
+				input.btn.btn-large.btn-warning(type='submit', value='提交订单', id="save_btn")
+		hr
+		div.row
+			div.span4
+				p 贺卡已经完成，完成支付，便可以寄送到您的手中了。
+				h3 ca图:
+			div.span6
+				#submit-form-container
+					form( method="post")#submit-form.form-horizontal.well.span6
+						h1
+						p# 最后，请留下一点点关于您的信息，以保证最后能证明这是您的贺卡.
+						hr
+						fieldset
+							#name-cg.control-group
+								p 姓名（用于寄件时写明收货人）
+								.controls
+									input#name-tf.input-xlarge(type='text', name='realname', value= user.name)
+							#email-cg.control-group
+								p 电子邮件（重要！问题件、找回邮件、证明您身份的唯一凭证）
+								.controls
+									input#email-tf.input-xlarge(type='text', name='email', value= user.email)
+							hr
+							p 收货人地址（可选）
+							p#sub2.subheading
+							#user-cg.control-group
+								p 收货人地址
+								.controls
+									input#user-tf.input-xlarge.disabled(type='text', name='address', value='')
+							#pass-cg.control-group
+								p联系电话
+								.controls
+									input#pass-tf.input-xlarge(type='text', name='phone', value='')
+									input(type="hidden",name="billid", id="billid", value='#{billid}')
+									input(type="hidden",name="user", id="username", value='#{username}')
+									input(type="hidden",name="imagepath", id="imagepath", value='#{imagepath}')
+
+				// display form errors in a custom modal window //
+
+				include modals/form-errors
+include footer
+script(src='/js/form-validators/accountValidator.js')

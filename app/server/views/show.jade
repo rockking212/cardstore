@@ -1,0 +1,31 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+include top
+
+div.container
+	form(method='post', action='/complete_info', enctype='multipart/form-data')
+		div.row
+			div.span3
+				#logo-container
+		div.row
+			#top-sperater
+			div.span10
+				h1 第三步 
+			div.span2
+				input.btn.btn-large.btn-warning(type='submit', value='下一步', id="save_btn")
+		hr
+		div.row
+			div.span8
+				p 框取您要的部分，这一部分将在您的明信片的背面作为照片打印出来！
+				h3 ca图:
+		div.row
+			div.span4
+				img#imagecuted(src='#{imagepath}', style="width: 300px; ")
+			div.span6
+				p 文字
+				textarea#textarea_l(rows="12", id='text', name="text")
+				input(type="hidden",name="billid", id="billid", value='#{billid}')
+				input(type="hidden",name="username", id="username", value='#{username}')
+				input(type="hidden",name="imagepath", id="imagepath", value='#{imagepath}')
+
+
+include footer

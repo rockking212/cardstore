@@ -1,0 +1,35 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+include top
+div.navbar.navbar-fixed-top
+	div.navbar-inner
+		div.container-fluid
+			ul#global-nav.nav.pull-left
+				a(href='#').brand 念恋卡
+			button#btn-logout.btn.btn-primary
+				i.icon-lock.icon-white
+				| 退出
+div.container
+	form(method='post', action='/upload', enctype='multipart/form-data')
+		div.row
+			div.span3
+				#logo-container
+		div.row
+			#top-sperater
+			div.span10
+				h1 第一步  
+			div.span2
+				input.btn.btn-large.btn-warning(type='submit', value='下一步')
+		hr
+		div.row
+			#item-container
+				div.span6
+
+					p 选择适合寄送给您到好朋友、家人表达自己节日到祝福.
+					p 上传图片到时候，可以选择上传自己到手机照片、数码相片；
+					p 如果你想要清晰到打印效果，那一定要记得挑选清晰大图哦；
+					p 图片大小请不要超过8mb，也最好不要小于100kb。
+
+					| 在这里上传一张图片 ；）
+
+				input.btn(type='file', name='upload', multiple='multiple')
+include footer

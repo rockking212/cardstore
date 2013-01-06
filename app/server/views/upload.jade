@@ -1,0 +1,63 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min1.css')
+include top
+div.container
+	form#form_cut(method='post', action='/show', enctype='multipart/form-data', onsubmit="return checkCoords();")
+		div.row
+			#top-sperater
+			div.span10
+				h1 第二步 
+			div.span2
+				input.btn.btn-large.btn-warning(type='submit', value='下一步', id="save_btn")
+		hr
+		div.row
+			p 框取您要的部分，这一部分将在您的明信片的背面作为照片打印出来！
+			h3 原图
+			input(type="hidden",name="cut_x", id="cut_x", value="0")
+			input(type="hidden",name="cut_y", id="cut_y", value="0")
+			input(type="hidden",name="cut_w", id="cut_w", value="612")
+			input(type="hidden",name="cut_h", id="cut_h", value="612")
+			input(type="hidden",name="cut_s", id="cut_s", value="/")
+			input(type="hidden",name="cut_ow", id="cut_ow", value="0")
+			input(type="hidden",name="cut_oh", id="cut_oh", value="0")
+		div.row
+			div.span6
+				#imgs
+					img#imageupload(src='#{imagepath}', style="width: 500px; ")
+			div.span4
+				#picture_200
+include footer
+
+
+script(type='text/javascript')
+	var img=new Image();
+	img.src='#{imagepath}';
+	var scale = img.width/500;
+	var cutter = new jQuery.UtrialAvatarCutter(
+		{
+		content : "imgs",
+		purviews : [{id:"picture_200",width:200,height:200},{id:"picture_50",width:50,height:50},{id:"picture_30",width:30,height:30}],
+		selector : {width:200,height:200}
+		}
+	);
+		$(function() {
+			$('#imageupload').Jcrop({boxWidth: 500, boxHeight: 400 });
+		});
+		$(window).load(function(){
+			cutter.init();
+		$("#save_btn").click(function(){
+			var data = cutter.submit();
+			$('#cut_x').val(data.x);
+			$('#cut_y').val(data.y);
+			$('#cut_w').val(data.w);
+			$('#cut_h').val(data.h);
+			$('#cut_s').val(data.s);
+			$('#cut_ow').val(img.width);
+			$('#cut_oh').val(img.height);
+			//  alert("x="+cut_x+"\ny="+cut_y+"\nw="+cut_w+"\nh="+cut_h+"\ns="+data.s);
+			});
+		});
+		function checkCoords()
+		{
+			if (cutter($('#w').val())) return true;
+			alert('Please select a crop region then press submit.');
+		};

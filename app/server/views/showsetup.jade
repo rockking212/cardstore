@@ -1,0 +1,47 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+div.navbar.navbar-fixed-top
+	div.navbar-inner
+		div.container-fluid
+			ul#global-nav.nav.pull-left
+				a(href='#').brand Control Panel
+			button#btn-logout.btn.btn-primary
+				i.icon-lock.icon-white
+				| 退出
+div.container
+	div.row-fluid
+		hr
+		a(href="http://www.happyecard.com")
+			img#logo(style="position:absolute;top:0px;left:0;border:0;", src="img/logo.png", alt="have a nice day!")
+
+div.container-fluid
+		div.row-fluid
+			#top-sperater-setup 
+			div.span8
+			div.span2
+				a#btn.btn-large.btn-warning(href='/item') 添加贺卡
+		hr
+
+		div.row-fluid
+			div.span2
+				div.well
+					ul.nav.nav-list
+						li.nav-header 设置
+						li.active
+							a(herf='/account')
+								i.icon-cog 
+								| 账户设置
+						li
+							a(herf='/account')
+								i.icon-book
+								| 账单管理
+						li
+							a(herf='/account')
+								| 退出
+			div.span8
+				include account
+include footer
+include modals/alert
+include modals/confirm
+
+script(src='/js/views/home.js')
+script(src='/js/controllers/homeController.js')

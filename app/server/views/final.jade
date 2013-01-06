@@ -1,0 +1,28 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+include top
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : {}
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+div.container
+	form(method='post', action='http://www.kmwcxx.com/pay/cart/index.php', enctype='multipart/form-data')
+		div.row
+			div.span3
+				#logo-container
+		div.row
+			#top-sperater
+			div.span10
+				h1 完成了 
+			div.span2
+				input.btn.btn-large.btn-warning(type='submit', value='付款', id="save_btn")
+		hr
+		div.row
+			div.span4
+				p 贺卡已经完成，完成支付，便可以寄送到您的手中了。
+				h3 支付宝付款:
+
+				// display form errors in a custom modal window //
+
+				include modals/form-errors
+include footer
+script(src='/js/form-validators/accountValidator.js')
