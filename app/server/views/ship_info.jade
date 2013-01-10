@@ -5,7 +5,7 @@ include top
 // store the userId on the client side in a hidden input field //
 input(type='hidden', value= user._id)#userId
 div.container
-	form(method='post', action='http://happyecard.com:8080/cart/alipayapi.php', enctype='multipart/form-data', name='alipayment')
+	form(method='post', action='http://happyecard.com:8080/pay/cart/alipayapi.php', enctype='multipart/form-data', name='alipayment')
 		div.row
 			div.span3
 				#logo-container
@@ -30,7 +30,7 @@ div.container
 							#name-cg.control-group
 								p 姓名（用于填写寄件人）
 								.controls
-									input#name-tf.input-xlarge(type='text', name='WIDreceive_name', value= user.name)
+									input#name-tf.input-xlarge(type='text', name='realname', value= user.name)
 							#email-cg.control-group
 								p 电子邮件（重要！问题件、找回邮件、证明您身份的唯一凭证）
 								.controls
@@ -41,27 +41,19 @@ div.container
 							#user-cg.control-group
 								p 收件人地址
 								.controls
-									input#user-tf.input-xlarge.disabled(type='text', name='WIDreceive_address', value='')
+									input#user-tf.input-xlarge.disabled(type='text', name='address', value='')
 							#pass-cg.control-group
 								p收件人联系电话
 								.controls
-									input#pass-tf.input-xlarge(type='text', name='WIDreceive_phone', value='')
+									input#pass-tf.input-xlarge(type='text', name='phone', value='')
 							#pass-cg.control-group
 								p收件人邮编
 								.controls
 									input#pass-tf.input-xlarge(type='text', name='phone', value='')
-									input(type="hidden",name="WIDout_trade_no", id="billid", value='#{billid}')
+									input(type="hidden",name="billid", id="billid", value='#{billid}')
 									input(type="hidden",name="user", id="username", value='#{username}')
 									input(type="hidden",name="imagepath", id="imagepath", value='#{imagepath}')
 
-									input(type="hidden",name="WIDseller_email", value='502sky@163.com')
-									input(type="hidden",name="WIDsubject", value='card')
-									input(type="hidden",name="WIDprice", value='15')
-
-									input(type="hidden",name="WIDbody", value=' post card1')
-									input(type="hidden",name="WIDshow_url", value='http://happyecard.com')
-									input(type="hidden",name="WIDreceive_zip", value='123456')
-									input(type="hidden",name="WIDreceive_mobile", value='123456')
 				// display form errors in a custom modal window //
 
 				include modals/form-errors

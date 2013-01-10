@@ -16,7 +16,7 @@ module.exports = function(app) {
 	app.get('/', function(req, res){
 	// check if the user's credentials are saved in a cookie //
 		if (req.cookies.user == undefined || req.cookies.pass == undefined){
-			res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});
+			res.render('login', { locals: { title: '念恋卡-留住所有怀念的地方' }});
 		}	else{
 	// attempt automatic login //
 			AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
@@ -24,7 +24,7 @@ module.exports = function(app) {
 				    req.session.user = o;
 					res.redirect('/showaccount');
 				}	else{
-					res.render('login', { locals: { title: 'Hello - Please Login To Your Account' }});
+					res.render('login', { locals: { title: '念恋卡-留住所有怀念的地方' }});
 				}
 			});
 		}
