@@ -198,7 +198,11 @@ module.exports = function(app) {
 			res.render('print', { locals: { title : 'Account List', accts : accounts } });
 		})
 	});
-	
+	app.get('/BM_print', function(req, res) {
+		BM.getAllRecords( function(e, accounts){
+			res.render('print', { locals: { title : 'Account List', accts : accounts } });
+		})
+	});	
 	app.post('/delete', function(req, res){
 		AM.delete(req.body.id, function(e, obj){
 			if (!e){
@@ -216,6 +220,10 @@ module.exports = function(app) {
 		res.redirect('/print');
 	});
 */
+	app.get('/BM_reset', function(req, res) {
+		BM.delAllRecords( );
+		res.redirect('/print');
+	});
 // show choose pic
 	app.get('/item', function(req, res) {
 		res.render('item', { title: '念恋卡 - ', username: '游客', name:'游客1', price:1 });
@@ -229,7 +237,53 @@ module.exports = function(app) {
 
 //submit bill
 
-	app.post('/submit_bill', function(req, res) {
+	app.post('/added_list', function(req, res) {
+	    console.log(req.body);
+
+		BM.create({
+			bill_id : req.body.billid,
+			imagepath 	: req.param('imagepath'),
+			email 	: req.param('email'),
+			user 	: 'test',
+			phone	: req.param('phone'),
+			country : req.param('country'),
+			count   : 1
+		}, function(e, o){
+			if (e){
+				res.send(e, 400);
+			}	else{
+
+	        res.redirect('/show_list');
+			}
+		});
+
+	//	res.render('complete_info', { title: '念恋卡 - ', username:req.body.username, imagepath:req.body.imagepath, billid:req.body.billid});
+	});
+
+	app.get('/show_list', function(req, res) {
+	    if (req.session.user == null){
+	// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
+		BM.accounts.find({user:'test'}).toArray(function(error, results){
+					console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					console.log(results);
+					console.log(results.length);
+				//	console.log(results[1].bill_id);
+
+					res.render('show_list', {
+						locals: {
+							title : '用户设置',
+							countries : CT,
+							udata : req.session.user,
+							img_list: results
+								}
+							});
+
+		});
+		}
+	});
+	app.post('/submit_item', function(req, res) {
 	    console.log(req.body);
 
 		BM.create({
@@ -249,6 +303,7 @@ res.render('final', { title: '念恋卡 - ', username:req.body.username, imagepa
 
 	//	res.render('complete_info', { title: '念恋卡 - ', username:req.body.username, imagepath:req.body.imagepath, billid:req.body.billid});
 	});
+
 // show uploaded pic
 	app.post('/upload', function(req, res) {
 	console.log("test user comes!");

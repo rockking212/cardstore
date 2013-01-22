@@ -1,5 +1,5 @@
 body {
-  background: url("/img/014.jpg") repeat;
+  background: url("/img/bg_grey.png") repeat;
 }
 #top-sperater-setup {
   margin-top: 150px;
@@ -44,6 +44,10 @@ body {
 #logo {
   margin-top: 70px;
   margin-left: 70px;
+}
+#img_list {
+  width: 200px;
+  height: 200px;
 }
 .footer {
   margin-bottom: 0px;

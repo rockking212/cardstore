@@ -11,7 +11,7 @@ var dbNBMe = 'bill';
 var moment = require('moment');
 
 var BM = {}; 
-	BM.db = new Db(dbNBMe, new Server(dbHost, dbPort, {auto_reconnect: true}, {}), {w:1});
+	BM.db = new Db(dbNBMe, new Server(dbHost, dbPort, {auto_reconnect: true}, {}));
 	BM.db.open(function(e, d){
 		if (e) {
 			console.log(e);
