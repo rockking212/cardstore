@@ -234,7 +234,10 @@ module.exports = function(app) {
 //	    console.log(req.body);
 		res.render('complete_info', { title: '念恋卡 - ', username:req.body.username, imagepath:req.body.imagepath, billid:req.body.billid});
 	});
-
+	app.get('/add_address', function(req, res) {
+//	    console.log(req.body);
+		res.render('add_address', { title: '念恋卡 - ', username:req.body.username, imagepath:req.body.imagepath, billid:req.body.billid});
+	});
 //submit bill
 
 	app.post('/added_list', function(req, res) {
@@ -248,6 +251,30 @@ module.exports = function(app) {
 			phone	: req.param('phone'),
 			country : req.param('country'),
 			count   : 1
+		}, function(e, o){
+			if (e){
+				res.send(e, 400);
+			}	else{
+
+	        res.redirect('/show_list');
+			}
+		});
+	});
+	app.post('/add_address2db', function(req, res) {
+	    console.log(req.body);
+
+		BM.create({
+			p_name : p_name,
+			user 	: 'test',
+			p_address : p_address,
+			p_phone : p_phone,
+			p_zip : p_zip,
+			r_name : r_name,
+			r_address : r_address,
+			r_phone : r_phone,
+			r_zip : r_zip,
+			p_email : p_email
+
 		}, function(e, o){
 			if (e){
 				res.send(e, 400);

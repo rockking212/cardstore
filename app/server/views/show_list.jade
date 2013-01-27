@@ -1,0 +1,68 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+div.navbar.navbar-fixed-top
+	div.navbar-inner
+		div.container-fluid
+			ul#global-nav.nav.pull-left
+				a(href='#').brand Control Panel
+			button#btn-logout.btn.btn-primary
+				i.icon-lock.icon-white
+				| 退出
+div.container
+	div.row-fluid
+		hr
+		a(href="http://www.happyecard.com")
+			img#logo(style="position:absolute;top:0px;left:0;border:0;", src="img/logo.png", alt="have a nice day!")
+
+div.container-fluid
+	form(method='post', action='/pay_confirm', enctype='multipart/form-data')
+		div.row-fluid
+			#top-sperater-setup 
+			div.span8
+			div.span2
+				a#btn.btn-large.btn-warning(href='/item') 继续添加
+		hr
+
+		div.row-fluid
+			div.span2
+				div.well
+					ul.nav.nav-list
+						li.nav-header 订单信息
+						button#btn.btn-large.btn-info 
+							a(href="/add_address")添加地址
+						button(type="submit")#btn.btn-large.btn-info 生成订单
+
+			div.span8
+				table.table.table-bordered.table-striped.table-condensed
+					thead
+						tr
+							th(style='width:50px') 序号
+							th(style='width:250px') 查看图片
+							th(style='width:180px') 内部-ID号
+							th(style='width:100px') 数量
+							th 生成日期
+					- for (var i = 0; i < img_list.length; i++)
+						tr
+							td
+								span.badge.badge-warning
+									=i+1
+								input(type = 'checkbox')
+							td
+								img#img_list(src='#{img_list[i].imagepath}', alt="have a nice day!")
+							td= img_list[i].bill_id
+							td
+								div.input-append
+									button(type="submit")#btn -
+									input(type='test', value='#{img_list[i].count}', style="width:30px;text-align:center")
+									button(type="submit")#btn +
+							td= img_list[i].date
+include footer
+include modals/alert
+include modals/confirm
+include modals/form-errors
+script(src='js/math.js')
+script(src='/vendor/jquery.min.js')
+script(src='/vendor/jquery.form.js')
+script(src='/vendor/bootstrap-modal.js')
+script(src='/vendor/bootstrap-transition.js')
+script(src='/js/views/home.js')
+script(src='/js/controllers/homeController.js')

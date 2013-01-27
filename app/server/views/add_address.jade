@@ -1,0 +1,53 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+include top
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : {}
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+div.container
+	form(method='post', action='/add_address2db', enctype='multipart/form-data')
+		div.row
+			div.span3
+				#logo-container
+		div.row
+			#top-sperater
+			div.span10
+				h1 邮寄信息
+			div.span2
+				input.btn.btn-large.btn-warning(type='submit', value='保存地址', id="save_btn")
+		hr
+		div.row
+			div.span10
+				p 请您在这里认真填写您的邮寄信息，以保证能顺利寄到您手中。我们将不会将您的个人信息用于商业用途！
+				h3 订单信息:
+		div.row
+			div.span6
+					h1
+					p# 寄件人信息
+					hr
+					p 寄件人
+					input(type='text', name='p_name', id="p_name", value= user.name)
+					p 寄件人地址
+					input(type='text', name='p_address', id="p_address", value= user.name)
+					p收件人联系电话
+					input(type='text', name='p_phone', id="p_phone", value='')
+					p 寄件人邮编
+					input#email-tf.input-xlarge(type='text', name='p_zip', id="p_zip", value= user.email)
+					hr
+					p 收件人信息
+					p 收件人
+					input#name-tf.input-xlarge(type='text', name='r_name', id="r_name", value= user.name)
+					p 收件人地址
+					input#user-tf.input-xlarge.disabled(type='text', name='r_address', id="r_address", value='')
+					p收件人联系电话
+					input#pass-tf.input-xlarge(type='text', name='r_phone', id="r_phone", value='')
+					p收件人邮编
+					input#pass-tf.input-xlarge(type='text', name='r_zip', id="r_zip", value='')
+					input(type="hidden",name="billid", id="billid", value='#{billid}')
+					input(type="hidden",name="user", id="username", value='#{username}')
+					input(type="hidden",name="imagepath", id="imagepath", value='#{imagepath}')
+				// display form errors in a custom modal window //
+			div.span4.offset2
+				h3 其他信息:
+include footer
+script(src='/js/form-validators/accountValidator.js')

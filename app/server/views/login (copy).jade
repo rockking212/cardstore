@@ -1,0 +1,43 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+include top
+div.container
+    div.row
+        div.span6
+            #main-intro
+                h1 欢迎来到念恋卡
+                h4 我们为您提供贺卡，照片打印等服务
+                h4您可以在这里制作一张有自己照片的精美贺卡，寄送给您的亲人、朋友。
+                h4 >>>
+                h4 >>>
+                    a#btn.btn-large.btn-warning(href='/item') 制作贺卡，试一试
+        div.span4
+            #login-container
+                form( method="post")#login-form.well.span4
+                    h1 欢迎回来!
+                    p 使用您之前留下的帐号登录，可以查看您的制作过的贺卡！
+                    label 用户名/邮件地址 
+                    input(type="text", name="user", id='user-tf').span4.required
+                    label 密码
+                    input(type="password", name="pass", id='pass-tf').span4.required
+                    button(type="submit")#btn-login.btn.btn-success
+                        i.icon-lock.icon-white
+                        | 登录
+                    label#remember-me.checkbox 记住密码
+                        input(type="checkbox", checked='checked')
+                    div.clear-fix
+                    hr
+                    div.btm-links
+                        a(href='#')#忘记了密码？点击这里......
+                        a(href='/signup')#现在注册
+include footer
+include modals/alert
+include modals/lost-password
+
+script(src='/vendor/jquery.min.js')
+script(src='/vendor/jquery.form.js')
+script(src='/vendor/bootstrap-modal.js')
+script(src='/vendor/bootstrap-transition.js')
+script(src='/js/views/login.js')
+script(src='/js/controllers/loginController.js')
+script(src='/js/form-validators/loginValidator.js')
+script(src='/js/form-validators/emailValidator.js')
