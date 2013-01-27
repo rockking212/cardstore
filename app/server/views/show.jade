@@ -13,16 +13,15 @@ div.container
 			div.span2
 				input.btn.btn-large.btn-warning(type='submit', value='下一步', id="save_btn")
 		hr
-		div.row(style="background: url(img/bg3.jpg);")
+		div.row
 			div.span8
 				p 框取您要的部分，这一部分将在您的明信片的背面作为照片打印出来！
 				h3 ca图:
-		div.row(style="background: url(img/bg3.jpg);")
+		div.row(style="background: url(img/write-letter.png) no-repeat center;height:500px;")
 			div.span4
-				img#imagecuted(src='#{imagepath}', style="width: 300px; ")
-			div.span6.offset2
-				p 文字
-				textarea#textarea_l(rows="12", id='text', name="text")
+				img#imagecuted(src='#{imagepath}', style="width: 160px; margin:140px 300px auto;")
+			div.span4
+				textarea#textarea_l(rows="10", id='text', name="text",  style="width: 160px; margin:140px 200px auto;")
 				input(type="hidden",name="billid", id="billid", value='#{billid}')
 				input(type="hidden",name="username", id="username", value='#{username}')
 				input(type="hidden",name="imagepath", id="imagepath", value='#{imagepath}')
