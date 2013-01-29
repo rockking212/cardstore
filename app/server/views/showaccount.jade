@@ -20,22 +20,27 @@ div.container-fluid
 			div.span2
 				a#btn.btn-large.btn-warning(href='/item') 添加贺卡
 		hr
-
 		div.row-fluid
 			div.span2
 				div.well
 					ul.nav.nav-list
 						li.nav-header 设置
 						li.active
-							a(herf='/home')
-								i.icon-cog 
-								| 账单管理
+							a(href='#')账单管理
 						li
-							a(herf='/showsetup')
+							a(href='/show_list')
+								i.icon-book
+								| 图片管理
+						li
+							a(href='/add_address')
+								i.icon-book
+								| 地址管理
+						li
+							a(href='/home')
 								i.icon-book
 								| 账户设置
 						li
-							a(herf='/')
+							a(href='/')
 								| 帮助
 			div.span8
 				table.table.table-bordered.table-striped.table-condensed
