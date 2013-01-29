@@ -5,6 +5,7 @@ module.exports = function(app, exp) {
 		app.set('views', app.root + '/app/server/views');
 		app.set('view engine', 'jade');
 		app.set('view options', { doctype : 'html', pretty : true });
+		app.use(exp.limit('8mb'));
 		app.use(exp.bodyParser());
 		app.use(exp.cookieParser());
 		app.use(exp.session({ secret: 'super-duper-secret-secret' }));
