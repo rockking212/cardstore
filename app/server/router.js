@@ -3,6 +3,8 @@ var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var BM = require('./modules/bill-manager');
 var EM = require('./modules/email-dispatcher');
+var util = require('..//public/js/util.js'), 
+constant = require('../public/js/constant.js'); 
 var querystring = require("querystring"),
     fs = require("fs"),
     formidable = require("formidable"),
@@ -335,7 +337,17 @@ res.render('final', { title: '念恋卡 - ', username:req.body.username, imagepa
 	app.post('/upload', function(req, res) {
 	console.log("test user comes!");
 //    console.log(req.body);
-//    console.log(req.files);
+    console.log(req.files);
+
+//    check_file_type
+
+if(!util.is_filetype(req.files.upload.name, constant.RESUME_FILETYPES)) { 
+// 由于客户端已做判断，所以这样的情况都是恶意上传的，直接提示 
+//res.send('文件格式错误: ' + req.files.upload.name + ' , 请上传' + constant.RESUME_FILETYPES + '格式的文件'); 
+res.send('文件格式错误: ' + req.files.upload.name + '煮豆持作羹，漉豉以为汁，萁在釜下燃，豆在釜中泣。本是同根生，相煎何太急。'); 
+return; 
+} 
+
 	var username;
 	    if (req.session.user == null){
 		username = 'test_user';

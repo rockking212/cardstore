@@ -1,5 +1,7 @@
 link(rel='stylesheet', href='/vendor/bootstrap.min.css')
 include top
+script(src="/js/util.js")
+script(src="/js/constant.js")
 div.navbar.navbar-fixed-top
 	div.navbar-inner
 		div.container-fluid
@@ -9,7 +11,7 @@ div.navbar.navbar-fixed-top
 				i.icon-lock.icon-white
 				| 退出
 div.container
-	form(method='post', action='/upload', enctype='multipart/form-data')
+	form(method='post', action='/upload', enctype='multipart/form-data',name="form")
 		div.row
 			div.span3
 				#logo-container
@@ -18,7 +20,7 @@ div.container
 			div.span10
 				h1 第一步  
 			div.span2
-				input.btn.btn-large.btn-warning(type='submit', value='下一步')
+				input.btn.btn-large.btn-warning(type='submit', value='下一步', onclick="return check_type();")
 		hr
 		div.row
 			#item-container
@@ -31,5 +33,6 @@ div.container
 
 					| 在这里上传一张图片 ；）
 
-				input.btn(type='file', name='upload', multiple='multiple')
+				input.btn#upload(type='file', name='upload', multiple='multiple')
+
 include footer
