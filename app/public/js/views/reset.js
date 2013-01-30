@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	
 	var rv = new ResetValidator();
@@ -13,11 +12,11 @@ $(document).ready(function(){
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
-			rv.showSuccess("Your password has been reset.");
+			rv.showSuccess("您的密码已经重设.");
 			setTimeout(function(){ window.location.href = '/'; }, 3000);
 		},
 		error : function(){
-			rv.showAlert("I'm sorry something went wrong, please try again.");
+			rv.showAlert("很抱歉，好像出错了，请稍后重试！");
 		}
 	});
 
