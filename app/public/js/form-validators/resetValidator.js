@@ -1,4 +1,3 @@
-
 function ResetValidator(){
     
 // modal window to allow users to reset their password //
@@ -12,7 +11,7 @@ ResetValidator.prototype.validatePassword = function(s)
 	if (s.length >= 6){
 		return true;
 	}	else{
-		this.showAlert('Password Should Be At Least 6 Characters');
+		this.showAlert('密码长度至少设置为6位！');
 		return false;
 	}
 }
