@@ -1,4 +1,3 @@
-
 function AccountValidator(){
 
 // build array maps of the form inputs & control groups //
@@ -34,7 +33,7 @@ function AccountValidator(){
 	
 	this.showErrors = function(a)
 	{
-		$('.modal-form-errors .modal-body p').text('Please correct the following problems :');
+		$('.modal-form-errors .modal-body p').text('以下几个地方不符合要求 :');
 		var ul = $('.modal-form-errors .modal-body ul');
 			ul.empty();
 		for (var i=0; i < a.length; i++) ul.append('<li>'+a[i]+'</li>');
@@ -46,13 +45,13 @@ function AccountValidator(){
 AccountValidator.prototype.showInvalidEmail = function()
 {
 	this.controlGroups[1].addClass('error');
-	this.showErrors(['That email address is already in use.']);
+	this.showErrors(['您使用的电子邮箱地址已经被注册过.']);
 }
 
 AccountValidator.prototype.showInvalidUserName = function()
 {
 	this.controlGroups[2].addClass('error');
-	this.showErrors(['That username is already in use.']);
+	this.showErrors(['很遗憾，您选择的用户名已经被其他人使用，请重新选择一个用户名.']);
 }
 
 AccountValidator.prototype.validateForm = function()
@@ -60,10 +59,10 @@ AccountValidator.prototype.validateForm = function()
 	var e = [];
 	for (var i=0; i < this.controlGroups.length; i++) this.controlGroups[i].removeClass('error');
 	if (this.validateName(this.formFields[0].val()) == false) {
-		this.controlGroups[0].addClass('error'); e.push('Please Enter Your Name');
+		this.controlGroups[0].addClass('error'); e.push('请输入用户名!');
 	}
 	if (this.validateEmail(this.formFields[1].val()) == false) {
-		this.controlGroups[1].addClass('error'); e.push('Please Enter A Valid Email');
+		this.controlGroups[1].addClass('error'); e.push('请输入正确的电子邮箱地址!');
 	}
 	if (this.validateName(this.formFields[2].val()) == false) {
 		this.controlGroups[2].addClass('error');
@@ -71,7 +70,7 @@ AccountValidator.prototype.validateForm = function()
 	}
 	if (this.validatePassword(this.formFields[3].val()) == false) {
 		this.controlGroups[3].addClass('error');
-		e.push('Password Should Be At Least 6 Characters');
+		e.push('密码长度至少输入六位!');
 	}
 	if (e.length) this.showErrors(e);
 	return e.length === 0;
