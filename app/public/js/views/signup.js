@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	
 	var av = new AccountValidator();
@@ -23,17 +22,17 @@ $(document).ready(function(){
 	
 // customize the account signup form //
 	
-	$('#account-form h1').text('Signup');
-	$('#account-form #sub1').text('Please tell us a little about yourself');
-	$('#account-form #sub2').text('Choose your username & password');
-	$('#account-form-btn1').html('Cancel');
-	$('#account-form-btn2').html('Submit');
+	$('#account-form h1').text('注册');
+	$('#account-form #sub1').text('请在下面填写一点您的信息');
+	$('#account-form #sub2').text('选择您的用户名和密码');
+	$('#account-form-btn1').html('取消');
+	$('#account-form-btn2').html('提交');
 	$('#account-form-btn2').addClass('btn-primary');
 	
 // setup the alert that displays when an account is successfully created //
 
 	$('.modal-alert').modal({ show : false, keyboard : false, backdrop : 'static' });
 	$('.modal-alert .modal-header h3').text('Success!');
-	$('.modal-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');
+	$('.modal-alert .modal-body p').html('恭喜您，账户已经生成.</br>请点击OK返回主页登陆.');
 
 })
