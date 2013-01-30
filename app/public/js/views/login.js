@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	
 	var lv = new LoginValidator();
@@ -20,7 +19,7 @@ $(document).ready(function(){
 			if (status == 'success') window.location.href = '/show_images';
 		},
 		error : function(e){
-            lv.showLoginError('Login Failure', 'Please check your username and/or password');
+            lv.showLoginError('登陆失败', '请检查您的用户名或密码是否正确！');
 		}
 	}); 
 	$('#user-tf').focus();
@@ -36,15 +35,15 @@ $(document).ready(function(){
 				ev.hideEmailAlert();
 				return true;
 			}	else{
-				ev.showEmailAlert("<b> Error!</b> Please enter a valid email address");
+				ev.showEmailAlert("<b> 出错啦!</b> 您的电子邮件地址好像有问题！");
 				return false;
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
-			ev.showEmailSuccess("Check your email on how to reset your password.");
+			ev.showEmailSuccess("请到您的邮箱接收邮件，以继续找回操作.");
 		},
 		error : function(){
-			ev.showEmailAlert("Sorry. There was a problem, please try again later.");
+			ev.showEmailAlert("出错啦，请稍后再试.");
 		}
 	});
 	
