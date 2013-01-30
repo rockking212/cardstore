@@ -1,4 +1,3 @@
-
 function LoginValidator(){
 
 // bind a simple alert window to this controller to display any errors //
@@ -18,10 +17,10 @@ function LoginValidator(){
 LoginValidator.prototype.validateForm = function()
 {
 	if ($('#user-tf').val() == ''){
-		this.showLoginError('Whoops!', 'Please enter a valid username');
+		this.showLoginError('出错啦!', '请输入一个符合要求用户名。');
 		return false;
 	}	else if ($('#pass-tf').val() == ''){
-		this.showLoginError('Whoops!', 'Please enter a valid password');
+		this.showLoginError('出错啦!', '请输入一个符合要求的密码');
 		return false;
 	}	else{
 		return true;
