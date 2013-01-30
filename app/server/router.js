@@ -1,7 +1,6 @@
 
 var CT = require('./modules/country-list');
-var AM = require('./modules/account-manager');
-var BM = require('./modules/bill-manager');
+var DM = require('./modules/db-manager');
 var EM = require('./modules/email-dispatcher');
 var util = require('..//public/js/util.js'), 
 constant = require('../public/js/constant.js'); 
@@ -11,7 +10,7 @@ var querystring = require("querystring"),
     http = require("http"),
     url = require("url"),
     gm = require('gm');
-
+var base_count = 0;
 module.exports = function(app) {
 
 // main login page //
@@ -22,10 +21,10 @@ module.exports = function(app) {
 			res.render('login', { locals: { title: '念恋卡-留住所有怀念的地方' }});
 		}	else{
 	// attempt automatic login //
-			AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
+			DM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
 				if (o != null){
 				    req.session.user = o;
-					res.redirect('/showaccount');
+					res.redirect('/show_images');
 				}	else{
 					res.render('login', { locals: { title: '念恋卡-留住所有怀念的地方' }});
 				}
@@ -34,7 +33,7 @@ module.exports = function(app) {
 	});
 	
 	app.post('/', function(req, res){
-		AM.manualLogin(req.param('user'), req.param('pass'), function(e, o){
+		DM.manualLogin(req.param('user'), req.param('pass'), function(e, o){
 			if (!o){
 				res.send(e, 400);
 			}	else{
@@ -75,7 +74,7 @@ module.exports = function(app) {
 	// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-		BM.accounts.find({user:'test'}).toArray(function(error, results){
+		DM.accounts.find({user:'test'}).toArray(function(error, results){
 //					console.log(results);
 //					console.log(results.length);
 //					console.log(results[1].bill_id);
@@ -94,7 +93,7 @@ module.exports = function(app) {
 	});
 	app.post('/home', function(req, res){
 		if (req.param('user') != undefined) {
-			AM.update({
+			DM.update({
 				user 		: req.param('user'),
 				name 		: req.param('name'),
 				email 		: req.param('email'),
@@ -127,7 +126,7 @@ module.exports = function(app) {
 	});
 	
 	app.post('/signup', function(req, res){
-		AM.signup({
+		DM.create_accounts({
 			name 	: req.param('name'),
 			email 	: req.param('email'),
 			user 	: req.param('user'),
@@ -146,7 +145,7 @@ module.exports = function(app) {
 
 	app.post('/lost-password', function(req, res){
 	// look up the user's account via their email //
-		AM.getEmail(req.param('email'), function(o){
+		DM.getEmail(req.param('email'), function(o){
 			if (o){
 				res.send('ok', 200);
 				EM.dispatchResetPasswordLink(o, function(e, m){
@@ -168,7 +167,7 @@ module.exports = function(app) {
 	app.get('/reset-password', function(req, res) {
 		var email = req.query["e"];
 		var passH = req.query["p"];
-		AM.validateLink(email, passH, function(e){
+		DM.validateLink(email, passH, function(e){
 			if (e != 'ok'){
 				res.redirect('/');
 			} else{
@@ -185,7 +184,7 @@ module.exports = function(app) {
 		var email = req.session.reset.email;
 	// destory the session immediately after retrieving the stored email //
 		req.session.destroy();
-		AM.setPassword(email, nPass, function(o){
+		DM.setPassword(email, nPass, function(o){
 			if (o){
 				res.send('ok', 200);
 			}	else{
@@ -196,18 +195,18 @@ module.exports = function(app) {
 	
 // view & delete accounts //
 	
-	app.get('/print', function(req, res) {
-		AM.getAllRecords( function(e, accounts){
+	app.get('/accounts_print', function(req, res) {
+		DM.getAllAccountsRecords( function(e, accounts){
 			res.render('print', { locals: { title : 'Account List', accts : accounts } });
 		})
 	});
-	app.get('/BM_print', function(req, res) {
-		BM.getAllRecords( function(e, accounts){
-			res.render('print', { locals: { title : 'Account List', accts : accounts } });
+	app.get('/bills_print', function(req, res) {
+		DM.getAllBillsRecords( function(e, bills){
+			res.render('print', { locals: { title : 'bills List', accts : bills } });
 		})
 	});	
 	app.post('/delete', function(req, res){
-		AM.delete(req.body.id, function(e, obj){
+		DM.delete(req.body.id, function(e, obj){
 			if (!e){
 				res.clearCookie('user');
 				res.clearCookie('pass');
@@ -223,8 +222,8 @@ module.exports = function(app) {
 		res.redirect('/print');
 	});
 */
-	app.get('/BM_reset', function(req, res) {
-		BM.delAllRecords( );
+	app.get('/DM_reset', function(req, res) {
+		DM.delAllRecords( );
 		res.redirect('/print');
 	});
 // show choose pic
@@ -246,7 +245,7 @@ module.exports = function(app) {
 	app.post('/added_list', function(req, res) {
 	    console.log(req.body);
 
-		BM.create({
+		DM.create_bills({
 			bill_id : req.body.billid,
 			imagepath 	: req.param('imagepath'),
 			email 	: req.param('email'),
@@ -263,45 +262,67 @@ module.exports = function(app) {
 			}
 		});
 	});
-	app.post('/add_address2db', function(req, res) {
+//add a image
+	app.post('/add_images', function(req, res) {
 	    console.log(req.body);
 
-		BM.create({
-			p_name : p_name,
-			user 	: 'test',
-			p_address : p_address,
-			p_phone : p_phone,
-			p_zip : p_zip,
-			r_name : r_name,
-			r_address : r_address,
-			r_phone : r_phone,
-			r_zip : r_zip,
-			p_email : p_email
+		DM.create_images({
+			images_id   : req.body.billid,
+			imagepath 	: req.param('imagepath'),
+			user_id 	: req.session.user.user_id,
+			count       : 0,
+			text        :req.body.text
+		}, function(e, o){
+			if (e){
+				res.send(e, 400);
+			}	else{
+
+	        res.redirect('/show_images');
+			}
+		});
+	});
+
+	app.post('/add_addresses', function(req, res) {
+	    console.log(req.body);
+	var date = new Date();
+	var current_time = '' + date.getYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
+		DM.create_addresses({
+			addresses_id: current_time,
+			user_id 	: req.session.user.user_id,
+			p_name      : req.body.p_name,
+			p_address   : req.body.p_address,
+			p_phone     : req.body.p_phone,
+			p_zip       : req.body.p_zip,
+			r_name      : req.body.r_name,
+			r_address   : req.body.r_address,
+			r_phone     : req.body.r_phone,
+			r_zip       : req.body.r_zip,
+			p_email     : req.body.p_email
 
 		}, function(e, o){
 			if (e){
 				res.send(e, 400);
 			}	else{
 
-	        res.redirect('/show_list');
+	        res.redirect('/show_images');
 			}
 		});
 
 	//	res.render('complete_info', { title: '念恋卡 - ', username:req.body.username, imagepath:req.body.imagepath, billid:req.body.billid});
 	});
 
-	app.get('/show_list', function(req, res) {
+	app.get('/show_images', function(req, res) {
 	    if (req.session.user == null){
 	// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-		BM.accounts.find({user:'test'}).toArray(function(error, results){
+		DM.images.find({user_id:req.session.user.user_id}).toArray(function(error, results){
 					console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					console.log(results);
 					console.log(results.length);
 				//	console.log(results[1].bill_id);
 
-					res.render('show_list', {
+					res.render('show_images', {
 						locals: {
 							title : '用户设置',
 							countries : CT,
@@ -316,7 +337,7 @@ module.exports = function(app) {
 	app.post('/submit_item', function(req, res) {
 	    console.log(req.body);
 
-		BM.create({
+		DM.create_bills({
 			bill_id : req.body.billid,
 			imagepath 	: req.param('imagepath'),
 			email 	: req.param('email'),
@@ -388,20 +409,22 @@ return;
 // show cuted pic
 	app.post('/show', function(req, res) {
 	var username;
+	var date = new Date();
+	var current_time = '' + date.getYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
 	    if (req.session.user == null){
-		username = 'test_user';
+			username = '' + current_time + base_count;
+			tmp_count++;
+			console.log('a new tmp user:' + tmp_count); 
+			console.log('tmp user name:' + username); 
 		}else
 			{
-username = req.session.user.name;
+username = req.session.user.user;
 			}
 //	console.log(username);
 
 		var img_source = './app/public/'+req.body.cut_s;
 		var cut_scale = req.body.cut_ow/500;
-		var date = new Date();
-		var current_time = '-'+date.getYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
-		var target_save = 'cut/'+ username + current_time+'.jpg';
-//         console.log(current_time);   
+		var target_save = 'cut/'+ username + current_time+'.jpg';  
 //		console.log(req.body);
 //		console.log(img_source);
 		gm(img_source)

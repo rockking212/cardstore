@@ -23,38 +23,63 @@ div.container-fluid
 		hr
 
 		div.row-fluid
-			div.span2
+			div.span3
 				div.well
-					ul.nav.nav-list
-						li.nav-header 订单信息
-						button#btn.btn-large.btn-info 
-							a(href="/add_address")添加地址
+					div.alert.alert-info
+						h4 订单信息
+						hr
+						p 贺卡份数：
+						p 大小    ： 标准信封 16cm*10cm
+						p 邮寄方式：
+						hr
+						h4 支付总金额：
+						hr
 						button(type="submit")#btn.btn-large.btn-info 生成订单
 
+					div.alert.alert-success
+						| 邮寄地址信息
+						hr
+						p收件人邮编：
+						p收件人地址：
+						p收件人姓名：
+						p收件人电话：
+						hr
+						p寄件人邮编：
+						p寄件人地址：
+						p寄件人姓名：
+						p寄件人电话：
+						button#btn.btn-large.btn-info(type="button",href="#", onclick="Javascript:window.location.href='/add_address';") 修改地址
+
 			div.span8
-				table.table.table-bordered.table-striped.table-condensed
+				table.table.table-bordered(style='background:#FBEED5;')
 					thead
 						tr
-							th(style='width:50px') 序号
-							th(style='width:250px') 查看图片
-							th(style='width:180px') 内部-ID号
-							th(style='width:100px') 数量
-							th 生成日期
+							th(style='width:10px') 序号
+							th(style='width:250px') 贺卡预览
+							th(style='width:200px') 其他信息
+							th(style='width:20px') 数量
 					- for (var i = 0; i < img_list.length; i++)
 						tr
 							td
 								span.badge.badge-warning
 									=i+1
-								input(type = 'checkbox')
+								a.close &times;
+								//input(type = 'checkbox')
 							td
 								img#img_list(src='#{img_list[i].imagepath}', alt="have a nice day!")
-							td= img_list[i].bill_id
+							td
+								p 图片编号：
+								p #{img_list[i].images_id}
+								p 文字：
+								p #{img_list[i].text}
+								p 生成日期：
+								p #{img_list[i].date}
 							td
 								div.input-append
-									button(type="submit")#btn -
+									button(type="button")#btn -
 									input(type='test', value='#{img_list[i].count}', style="width:30px;text-align:center")
-									button(type="submit")#btn +
-							td= img_list[i].date
+									button(type="button")#btn +
+
 include footer
 include modals/alert
 include modals/confirm

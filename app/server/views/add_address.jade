@@ -5,7 +5,7 @@ include top
 // store the userId on the client side in a hidden input field //
 input(type='hidden', value= user._id)#userId
 div.container
-	form(method='post', action='/add_address2db', enctype='multipart/form-data')
+	form(method='post', action='/add_addresses', enctype='multipart/form-data')
 		div.row
 			div.span3
 				#logo-container
@@ -33,10 +33,6 @@ div.container
 							//input(type='text', name='p_phone', id="p_phone", value='', placeholder='联系电话', style="margin:10px 200px auto;width:150px;")
 						input#email-tf.input-xlarge(type='text', name='p_zip', id="p_zip", value='', placeholder= '寄件人邮编', style="margin:5px 400px auto;width:150px;")
 					hr
-
-					input(type="hidden",name="billid", id="billid", value='#{billid}')
-					input(type="hidden",name="user", id="username", value='#{username}')
-					input(type="hidden",name="imagepath", id="imagepath", value='#{imagepath}')
 				// display form errors in a custom modal window //
 			div.span4.offset2
 				h3 其他信息:
