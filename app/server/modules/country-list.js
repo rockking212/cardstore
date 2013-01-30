@@ -1,7 +1,6 @@
-
 module.exports = [
-    {short:"  " , name:"Please select a country"},
-    {short:"AF" , name:"Afghanistan"},
+    {short:"  " , name:"请选择您所在的国家"},
+    {short:"CN" , name:"中国"},
     {short:"AL" , name:"Albania"},
     {short:"DZ" , name:"Algeria"},
     {short:"AS" , name:"American Samoa"},
