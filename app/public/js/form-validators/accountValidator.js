@@ -66,7 +66,7 @@ AccountValidator.prototype.validateForm = function()
 	}
 	if (this.validateName(this.formFields[2].val()) == false) {
 		this.controlGroups[2].addClass('error');
-		e.push('Please Choose A Username');
+		e.push('请选择一个用户名');
 	}
 	if (this.validatePassword(this.formFields[3].val()) == false) {
 		this.controlGroups[3].addClass('error');
