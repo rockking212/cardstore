@@ -1,4 +1,3 @@
-
 function HomeController()
 {
 
@@ -39,7 +38,7 @@ function HomeController()
 			type: "POST",
 			data: {logout : true},
 			success: function(data){
-	 			that.showLockedAlert('You are now logged out.<br>Redirecting you back to the homepage.');
+	 			that.showLockedAlert('您现在已经成功退出.<br>现在，我们将跳转到主页.');
 			},
 			error: function(jqXHR){
 				console.log(jqXHR.responseText+' :: '+jqXHR.statusText);
