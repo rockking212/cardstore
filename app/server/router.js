@@ -286,6 +286,19 @@ module.exports = function(app) {
 	    console.log(req.body);
 	var date = new Date();
 	var current_time = '' + date.getYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
+			DM.updateAddress({
+			addresses_id: current_time,
+			user_id 	: req.session.user.user_id,
+			p_name      : req.body.p_name,
+			p_address   : req.body.p_address,
+			p_phone     : req.body.p_phone,
+			p_zip       : req.body.p_zip,
+			r_name      : req.body.r_name,
+			r_address   : req.body.r_address,
+			r_phone     : req.body.r_phone,
+			r_zip       : req.body.r_zip,
+			p_email     : req.body.p_email
+		});
 		DM.create_addresses({
 			addresses_id: current_time,
 			user_id 	: req.session.user.user_id,
@@ -316,22 +329,31 @@ module.exports = function(app) {
 	// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-		DM.images.find({user_id:req.session.user.user_id}).toArray(function(error, results){
-					console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-					console.log(results);
-					console.log(results.length);
+		DM.images.find({user_id:req.session.user.user_id}).toArray(function(error, image_list){
+					// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					// console.log(results);
+					// console.log(results.length);
 				//	console.log(results[1].bill_id);
-
+		DM.addresses.find({user_id:req.session.user.user_id}).toArray(function(error, addresses){
+					// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					console.log(addresses);
+					console.log(addresses.length);
+					var addresses_a = true;
+					if(addresses.length == 0)addresses_a = false;
+				//	console.log(results[1].bill_id);
 					res.render('show_images', {
 						locals: {
 							title : '用户设置',
 							countries : CT,
 							udata : req.session.user,
-							img_list: results
+							img_list: image_list,
+							addresses: addresses[0],
+							addresses_a: addresses_a
 								}
 							});
 
 		});
+				});
 		}
 	});
 	app.post('/submit_item', function(req, res) {

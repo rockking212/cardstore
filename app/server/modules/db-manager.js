@@ -60,7 +60,7 @@ DM.create_addresses = function(newData, callback)
 {
 	DM.addresses.findOne({addresses_id:newData.addresses_id}, function(e, o) {
 		if (o){
-			callback('addresses-exist');
+			 callback('addresses-exist');
 		}	else{
 					// append date stBMp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -145,6 +145,24 @@ DM.update = function(newData, callback)
 				DM.accounts.save(o); callback(o);
 			});
 		}
+	});
+}
+
+DM.updateAddress = function(newData, callback)
+{
+	DM.addresses.findOne({user_id:newData.user_id}, function(e, o){
+		o.addresses_id  = newData.addresses_id;
+		o.p_name      = newData.p_name;
+		o.p_address   = newData.p_address;
+		o.p_phone     = newData.p_phone;
+		o.p_zip       = newData.p_zip;
+		o.r_name      = newData.r_name;
+		o.r_address   = newData.r_address;
+		o.r_phone     = newData.r_phone;
+		o.r_zip       = newData.r_zip;
+		o.p_email     = newData.p_email;
+
+	DM.addresses.save(o);
 	});
 }
 

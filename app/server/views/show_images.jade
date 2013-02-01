@@ -28,26 +28,29 @@ div.container-fluid
 					div.alert.alert-info
 						h4 订单信息
 						hr
-						p 贺卡份数：
+						div(id='mun')贺卡份数：0
 						p 大小    ： 标准信封 16cm*10cm
 						p 邮寄方式：
 						hr
-						h4 支付总金额：
+						h4(id='price',style="color:#F89406;")支付总金额：0元
 						hr
 						button(type="submit")#btn.btn-large.btn-info 生成订单
 
 					div.alert.alert-success
 						| 邮寄地址信息
-						hr
-						p收件人邮编：
-						p收件人地址：
-						p收件人姓名：
-						p收件人电话：
-						hr
-						p寄件人邮编：
-						p寄件人地址：
-						p寄件人姓名：
-						p寄件人电话：
+						if(addresses_a)
+							hr
+							p收件人邮编：#{addresses.r_zip}
+							p收件人地址：#{addresses.r_address}
+							p收件人姓名：#{addresses.r_name}
+							p收件人电话：#{addresses.r_phone}
+							hr
+							p寄件人邮编：#{addresses.p_zip}
+							p寄件人地址：#{addresses.p_address}
+							p寄件人姓名：#{addresses.p_name}
+							p寄件人电话：#{addresses.p_phone}
+						else
+							p 没有地址
 						button#btn.btn-large.btn-info(type="button",href="#", onclick="Javascript:window.location.href='/add_address';") 修改地址
 
 			div.span8
@@ -76,15 +79,26 @@ div.container-fluid
 								p #{img_list[i].date}
 							td
 								div.input-append
-									button(type="button")#btn -
-									input(type='test', value='#{img_list[i].count}', style="width:30px;text-align:center")
-									button(type="button")#btn +
-
+									button(type="button", onmouseup="if(document.getElementById('count#{i}').value>0) document.getElementById('count#{i}').value--;calc();")#btn -
+									input(type='test', id='count#{i}', name='count#{i}', value='0', style="width:30px;text-align:center")
+									button(type="button", onmouseup="document.getElementById('count#{i}').value++;calc();")#btn +
+script(type='text/javascript')
+	function calc() {
+		var total_price = 0;
+		var chac;
+		for (var i = 0; i < img_list.length; i++)
+			{
+				chac = "input[name='count" + i+"']";
+				total_price += parseInt($(chac).val());
+			}
+		$("#mun").html('贺卡份数：'+total_price+'份');
+		$("#price").html('支付总金额：'+total_price*3+'元');
+	}
 include footer
 include modals/alert
 include modals/confirm
 include modals/form-errors
-script(src='js/math.js')
+// script(src='js/math.js')
 script(src='/vendor/jquery.min.js')
 script(src='/vendor/jquery.form.js')
 script(src='/vendor/bootstrap-modal.js')
