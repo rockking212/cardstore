@@ -317,19 +317,19 @@ module.exports = function(app) {
 	    console.log(req.body);
 	var date = new Date();
 	var current_time = '' + date.getYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
-			DM.updateAddress({
-			addresses_id: current_time,
-			user_id 	: req.session.user.user_id,
-			p_name      : req.body.p_name,
-			p_address   : req.body.p_address,
-			p_phone     : req.body.p_phone,
-			p_zip       : req.body.p_zip,
-			r_name      : req.body.r_name,
-			r_address   : req.body.r_address,
-			r_phone     : req.body.r_phone,
-			r_zip       : req.body.r_zip,
-			p_email     : req.body.p_email
-		});
+		// 	DM.updateAddress({
+		// 	addresses_id: current_time,
+		// 	user_id 	: req.session.user.user_id,
+		// 	p_name      : req.body.p_name,
+		// 	p_address   : req.body.p_address,
+		// 	p_phone     : req.body.p_phone,
+		// 	p_zip       : req.body.p_zip,
+		// 	r_name      : req.body.r_name,
+		// 	r_address   : req.body.r_address,
+		// 	r_phone     : req.body.r_phone,
+		// 	r_zip       : req.body.r_zip,
+		// 	p_email     : req.body.p_email
+		// });
 		DM.create_addresses({
 			addresses_id: current_time,
 			user_id 	: req.session.user.user_id,

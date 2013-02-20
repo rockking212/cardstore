@@ -19,7 +19,7 @@ div.container-fluid
 			#top-sperater-setup 
 			div.span8
 			div.span2
-				a#btn.btn-large.btn-warning(href='/item') 继续添加
+				a#btn.btn-large.btn-warning(href='/item') 付款
 		hr
 
 		div.row-fluid
@@ -70,7 +70,7 @@ div.container-fluid
 								//input(type = 'checkbox')
 							td(style="background:url(img/card-preview-s.jpg) no-repeat; height:275px;")
 								img#img_list(src='#{img_list[i].imagepath}', alt="have a nice day!", style="width:150px; height:150px; margin-top:39px;margin-left:23px;float:left;")
-								p(style="height:160px; width:160px; margin-top:39px;margin-left:203px;") #{img_list[i].text}
+								p(style="height:160px; width:160px; margin-top:39px;margin-left:203px;word-wrap: break-word;") #{img_list[i].text}
 							td
 								p 图片编号：
 								p #{img_list[i].images_id}

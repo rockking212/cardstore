@@ -11,11 +11,11 @@ body {
   margin: 20px 50px auto auto;
 }
 #top-sperater {
-  margin: 200px 50px auto auto;
+  margin: 10px 50px auto auto;
 }
 #login-container {
   width: 340px;
-  margin: 100px 50px auto auto;
+  margin: 10px 10px auto auto;
 }
 #login-container label {
   margin: 15px 0 5px 5px;

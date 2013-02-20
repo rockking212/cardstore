@@ -58,6 +58,7 @@ DM.manualLogin = function(user, pass, callback)
 
 DM.create_addresses = function(newData, callback)
 {
+	DM.addresses.remove({user_id:newData.user_id});
 	DM.addresses.findOne({addresses_id:newData.addresses_id}, function(e, o) {
 		if (o){
 			 callback('addresses-exist');

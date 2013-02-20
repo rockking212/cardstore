@@ -3,10 +3,36 @@ div.navbar.navbar-fixed-top
 	div.navbar-inner
 		div.container-fluid
 			ul#global-nav.nav.pull-left
-				a(href='#').brand Control Panel
-			button#btn-logout.btn.btn-primary
-				i.icon-lock.icon-white
-				| 退出
+				a(href='#').brand 念恋网
+				li
+					a.span3(href='#').brand 
+						p >>>>>>>>>>>>>>>>>>
+				li
+					a.span2(href='#').brand 
+						div(id='mun')贺卡份数：0份
+				li
+					a.span2(href='#').brand 
+						p 邮寄方式：
+				li
+					a.span2(href='#').brand 
+						label.radio(style="color:#468847;")
+							input(type='radio', id="optionsRadios1", name="optionsRadios", onchange="calc();", value="3", checked) 
+							p 平邮（3元邮费）
+				li
+					a.span2(href='#').brand 
+						label.radio(style="color:#468847;")
+							input(type='radio', id="optionsRadios2", name="optionsRadios", value="12",onchange="calc();") 
+							p 快递（12元邮费）
+				li
+					a.span3(href='#').brand 
+						p(id='price',style="color:#F89406;")支付总金额：0元
+				li
+					a.span2(href='#').brand 
+						button(type="submit", onclick="$('#main_form').submit()")#btn.btn.btn-warning 生成订单
+
+			//- button#btn-logout.btn.btn-primary
+			//- 	i.icon-lock.icon-white
+			//- 	| 退出
 div.container
 	div.row-fluid
 		hr
@@ -14,7 +40,7 @@ div.container
 			img#logo(style="position:absolute;top:0px;left:0;border:0;", src="img/logo.png", alt="have a nice day!")
 
 div.container-fluid
-	form(method='post', action='/add_bills', enctype='multipart/form-data')
+	form(method='post', action='/add_bills', enctype='multipart/form-data', id="main_form")
 		div.row-fluid
 			#top-sperater-setup 
 			div.span8
@@ -27,18 +53,15 @@ div.container-fluid
 				div.well
 					div.alert.alert-info
 						h4 订单信息
-						hr
 						div(id='mun')贺卡份数：0份
 						p 大小    ： 标准信封 16cm*10cm
 						p 邮寄方式：
 						label.radio(style="color:#468847;")
 							input(type='radio', id="optionsRadios1", name="optionsRadios", onmouseup="calc();", value="3", checked) 
-							p() 平邮（3元邮递费用，无保障）
+							p 平邮（3元邮递费用，无保障）
 							input(type='radio', id="optionsRadios2", name="optionsRadios", value="12",onmouseup="calc();") 
 							p 快递（12元邮递费用，有保障）
-						hr
 						h4(id='price',style="color:#F89406;")支付总金额：0元
-						hr
 						button(type="submit")#btn.btn-large.btn-info 生成订单
 
 					div.alert.alert-success
@@ -62,9 +85,9 @@ div.container-fluid
 				table.table.table-bordered(style='background:#FBEED5;')
 					thead
 						tr
-							th(style='width:10px') 序号
+							th(style='width:30px') 序号
 							th(style='width:400px') 贺卡预览
-							th 其他信息
+							th(style='width:200px') 其他信息
 							th(style='width:20px') 数量
 					- for (var i = 0; i < img_list.length; i++)
 						tr
@@ -75,7 +98,8 @@ div.container-fluid
 								//input(type = 'checkbox')
 							td(style="background:url(img/card-preview-s.jpg) no-repeat; height:275px;")
 								img#img_list(src='#{img_list[i].imagepath}', alt="have a nice day!", style="width:150px; height:150px; margin-top:39px;margin-left:23px;float:left;")
-								p(style="height:160px; width:160px; margin-top:39px;margin-left:203px;") #{img_list[i].text}
+								div
+									p(style="height:160px; width:160px; margin-top:39px;margin-left:203px;word-wrap: break-word;") #{img_list[i].text}
 							td
 								p 图片编号：
 								p #{img_list[i].images_id}

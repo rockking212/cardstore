@@ -30,55 +30,22 @@ div.navbar.navbar-fixed-top
 			button#btn-logout.btn.btn-primary
 				i.icon-lock.icon-white
 				| 登录
-div.container(style="padding: 5px 5px; background:url(img/body-bg.png); box-shadow: 1px 3px 3px #333; border-radius: 5px;text-align: left;")
-	div.row(style="margin-top:50px;")
+div.container
+	div.row(style="margin-top:40px;height:150px;")
 		div.span3
 			a(href="http://www.happyecard.com")
 				img(src="img/logo.png", alt="have a nice day!",style="margin-left:20px;margin-top:20px;")
-			p The perfect memory with you! 
-			p don't leave it alone. 
-
-			a#btn.btn-large.btn-warning(href='/item',style="margin-top:300px;") 开始定制
+div.container
+	div.row
 		div.span8
 			div#myCarousel.carousel.slide
 				div.carousel-inner
 					div.item.active
-						img(src="img/pic_0.jpg")
-						div.carousel-caption
-							h4 新年贺卡
-							p 我们为您提供贺卡，照片打印等服务您可以在这里制作一张有自己照片的精美贺卡，寄送给您的亲人、朋友。
+						img(src="img/love1.jpg", style="height:440px;")
 					div.item
-						img(src='img/pic_1.jpg')
+						img(src='img/love2.jpg', style="height:440px;")
 					div.item
-						img(src='img/pic_2.jpg')
-					div.item
-						img(src='img/pic_3.jpg')
-					div.item
-						img(src='img/pic_4.jpg')
-
-				a(class="carousel-control left",href="#myCarousel",data-slide="prev")&lsaquo;
-				a(class="carousel-control right",href="#myCarousel",data-slide="next")&rsaquo;
-	div.row
-		div.span12(style="background: url(img/red_line.jpg) repeat-x;height:80px;")
-	div.row
-		div.span5
-			h1 在这里，您可以.....
-			p 使用您的照片，做一张独一无二的贺卡....
-			p 生日贺卡、纪念日.....
-			p 秀幸福、秀恩爱、秀....
-			p 赶快把你手机中的精彩照片变成实实在在的卡片吧！
-
-		div.span7
-			img(src="img/intro-1.png")
-	div.row
-		div.span7
-			img(src="img/bg-3.jpg")
-		div.span5
-			h1 在这里，我们正在.....
-			p 为您维护一流的印刷工艺....
-			p 精心挑选贺卡模板.....
-			p 及时的快递服务....
-	div.row
+						img(src='img/love3.jpg', style="height:440px;")
 		div.span4
 			#login-container
 				form( method="post")#login-form.well.span4
@@ -97,9 +64,7 @@ div.container(style="padding: 5px 5px; background:url(img/body-bg.png); box-shad
 					hr
 					div.btm-links
 						a(href='#')#忘记了密码？点击这里......
-						a(href='/signup')#现在注册
-		div.span6.offset2
-			img(src="img/bg-pic5.jpg")		
+						a(href='/signup')#现在注册	
 
 include footer
 include modals/alert
