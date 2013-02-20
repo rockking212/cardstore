@@ -14,7 +14,7 @@ div.container
 			img#logo(style="position:absolute;top:0px;left:0;border:0;", src="img/logo.png", alt="have a nice day!")
 
 div.container-fluid
-	form(method='post', action='/add_bills', enctype='multipart/form-data')
+	form(method='post', action='/pay_confirm', enctype='multipart/form-data')
 		div.row-fluid
 			#top-sperater-setup 
 			div.span8
@@ -87,7 +87,7 @@ div.container-fluid
 									input(type='text', id='count#{i}', name='count#{i}', value='0', style="width:30px;text-align:center")
 									button(type="button", onmouseup="document.getElementById('count#{i}').value++;calc();")#btn +
 									input(type="hidden",name="image_#{i}", value='#{img_list[i].images_id}')
-									input(type="hidden",name="list_length", value='#{img_list.length}')
+				input(type="hidden",name="list_length", value='#{img_list.length}')
 
 script(type='text/javascript')
 	function calc() {

@@ -74,16 +74,16 @@ DM.create_addresses = function(newData, callback)
 
 DM.create_bills = function(newData, callback)
 {
-	DM.bills.findOne({bill_id:newData.bill_id}, function(e, o) {
-		if (o){
-			callback('bill-exist');
-		}	else{
+	// DM.bills.findOne({bill_id:newData.bill_id}, function(e, o) {
+	// 	if (o){
+	// 		callback('bill-exist');
+	// 	}	else{
 					// append date stBMp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 						newData.statue = 0;
 						DM.bills.insert(newData, callback(null));
-				};
-	});
+	// 			};
+	// });
 }
 
 // record insertion, update & deletion methods //

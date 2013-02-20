@@ -1,0 +1,94 @@
+link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+div.navbar.navbar-fixed-top
+	div.navbar-inner
+		div.container-fluid
+			ul#global-nav.nav.pull-left
+				a(href='#').brand Control Panel
+			button#btn-logout.btn.btn-primary
+				i.icon-lock.icon-white
+				| 退出
+div.container
+	div.row-fluid
+		hr
+		a(href="http://www.happyecard.com")
+			img#logo(style="position:absolute;top:0px;left:0;border:0;", src="img/logo.png", alt="have a nice day!")
+
+div.container-fluid
+	form(method='post', action='/add_bills', enctype='multipart/form-data')
+		div.row-fluid
+			#top-sperater-setup 
+			div.span8
+			div.span2
+				a#btn.btn-large.btn-warning(href='/item') 继续添加
+		hr
+
+		div.row-fluid
+			div.span10
+				div.well
+					div.alert.alert-info
+						div.row
+							div.span4.offset1
+								h4 订单信息 （订单号：#{addresses.r_zip})
+								hr
+								div(id='mun')贺卡份数：0份
+								p 大小    ： 标准信封 16cm*10cm
+								p 邮寄方式：
+								label.radio(style="color:#468847;")
+									input(type='radio', id="optionsRadios1", name="optionsRadios", onmouseup="calc();", value="3", checked) 
+									p() 平邮（3元邮递费用，无保障）
+									input(type='radio', id="optionsRadios2", name="optionsRadios", value="12",onmouseup="calc();") 
+									p 快递（12元邮递费用，有保障）
+								hr
+								h4(id='price',style="color:#F89406;")支付总金额：0元
+								hr
+							div.span4
+								h4 邮寄地址信息
+								hr
+								p收件人邮编：#{addresses.r_zip}
+								p收件人地址：#{addresses.r_address}
+								p收件人姓名：#{addresses.r_name}
+								p收件人电话：#{addresses.r_phone}
+								hr
+								p寄件人邮编：#{addresses.p_zip}
+								p寄件人地址：#{addresses.p_address}
+								p寄件人姓名：#{addresses.p_name}
+								p寄件人电话：#{addresses.p_phone}
+		div.row-fluid
+			div.span10
+				table.table.table-bordered(style='background:#FBEED5;')
+					thead
+						tr
+							th(style='width:10px') 序号
+							th(style='width:400px') 贺卡预览
+							th 其他信息
+							th(style='width:20px') 数量
+					- for (var i = 0; i < img_list.length; i++)
+						tr
+							td
+								span.badge.badge-warning
+									=i+1
+								//input(type = 'checkbox')
+							td(style="background:url(img/card-preview-s.jpg) no-repeat; height:275px;")
+								img#img_list(src='#{img_list[i].imagepath}', alt="have a nice day!", style="width:150px; height:150px; margin-top:39px;margin-left:23px;float:left;")
+								p(style="height:160px; width:160px; margin-top:39px;margin-left:203px;") #{img_list[i].text}
+							td
+								p 图片编号：
+								p #{img_list[i].images_id}
+								p 生成日期：
+								p #{img_list[i].date}
+							td
+								div.input-append
+									input.input-xlarge.disabled(type='text', value='1', style="width:30px;text-align:center", disabled)
+									input(type="hidden",name="image_#{i}", value='#{img_list[i].images_id}')
+									input(type="hidden",name="list_length", value='#{img_list.length}')
+
+include footer
+include modals/alert
+include modals/confirm
+include modals/form-errors
+script(src='/vendor/jquery.min.js')
+script(src='/vendor/jquery.form.js')
+script(src='/vendor/bootstrap-modal.js')
+script(src='/vendor/bootstrap-transition.js')
+script(src='/js/views/home.js')
+script(src='/js/controllers/homeController.js')

@@ -17,11 +17,11 @@ div.container
 			div.span8
 				p 框取您要的部分，这一部分将在您的明信片的背面作为照片打印出来！
 				h3 ca图:
-		div.row(style="background: url(img/write-letter.png) no-repeat center;height:500px;")
+		div.row(style="background: url(img/card-preview-l.jpg) no-repeat center;height:500px;")
 			div.span4
-				img#imagecuted(src='#{imagepath}', style="width: 160px; margin:140px 300px auto;")
+				img#imagecuted1(src='#{imagepath}', style="width: 300px;margin:59px 104px auto;")
 			div.span4
-				textarea#textarea_l(rows="10", id='text', name="text",  style="width: 160px; margin:140px 200px auto;")
+				textarea#textarea_l(rows="8", id='text', name="text",  style="font-size:14pt;line-height:25pt;width: 250px; margin:100px 130px auto;background-color:transparent;")
 				input(type="hidden",name="billid", id="billid", value='#{billid}')
 				input(type="hidden",name="username", id="username", value='#{username}')
 				input(type="hidden",name="imagepath", id="imagepath", value='#{imagepath}')

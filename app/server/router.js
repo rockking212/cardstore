@@ -11,6 +11,37 @@ var querystring = require("querystring"),
     url = require("url"),
     gm = require('gm');
 var base_count = 0;
+function main_show_bills(user_id, bills_id,res)
+{
+					console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					console.log(user_id);
+					console.log(bills_id);
+
+		DM.images.find({user_id:user_id}).toArray(function(error, image_list){
+					// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					// console.log(results);
+					// console.log(results.length);
+				//	console.log(results[1].bill_id);
+		DM.addresses.find({user_id:user_id}).toArray(function(error, addresses){
+					DM.bills.find({bills_id:bills_id}).toArray(function(error, bills){
+					// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					console.log(bills);
+					console.log("bills");
+					res.render('show_bills', {
+						locals: {
+							title : '用户设置',
+							countries : CT,
+							udata : "user",
+							img_list: image_list,
+							addresses: addresses[0],
+							bills: bills
+								}
+							});
+				});
+
+		});
+				});
+}
 module.exports = function(app) {
 
 // main login page //
@@ -336,8 +367,8 @@ module.exports = function(app) {
 				//	console.log(results[1].bill_id);
 		DM.addresses.find({user_id:req.session.user.user_id}).toArray(function(error, addresses){
 					// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-					console.log(addresses);
-					console.log(addresses.length);
+					// console.log(addresses);
+					// console.log(addresses.length);
 					var addresses_a = true;
 					if(addresses.length == 0)addresses_a = false;
 				//	console.log(results[1].bill_id);
@@ -356,11 +387,88 @@ module.exports = function(app) {
 				});
 		}
 	});
+
+	app.get('/show_bills', function(req, res) {
+	    if (req.session.user == null){
+	// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
+		// DM.images.find({user_id:req.session.user.user_id}).toArray(function(error, image_list){
+		// 			// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		// 			// console.log(results);
+		// 			// console.log(results.length);
+		// 		//	console.log(results[1].bill_id);
+		// DM.addresses.find({user_id:req.session.user.user_id}).toArray(function(error, addresses){
+		// 			DM.bills.find({bills_id:req.body.bills_id}).toArray(function(error, bills){
+		// 			// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		// 			console.log(bills);
+		// 		//	console.log(results[1].bill_id);
+		// 			res.render('show_bills', {
+		// 				locals: {
+		// 					title : '用户设置',
+		// 					countries : CT,
+		// 					udata : req.session.user,
+		// 					img_list: image_list,
+		// 					addresses: addresses[0],
+		// 					addresses_a: addresses_a
+		// 						}
+		// 					});
+		// 		});
+
+		// });
+		// 		});
+			main_show_bills(req.session.user.user_id,req.session.user.user,res);
+		}
+	});
+
+//add a image
+	app.post('/add_bills', function(req, res) {
+			    if (req.session.user == null){
+	// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
+
+	//	console.log(req.body);
+	var date = new Date();
+	var bill_id = req.session.user.user + date.getYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds();
+		for (var i=0;i<9;i++)//最多添加9个
+	{
+
+		var count_n = "req.session.req.body.count" + i;
+		var image_n = "req.session.req.body.image_" + i;
+		var count = eval(count_n);
+		var image = eval(image_n);
+		// console.log('数量：'+count);
+		if(count>0)
+					// console.log('数量：'+count);
+			{
+				DM.create_bills({
+					user_id			: req.session.user.user_id,
+					bill_id			: bill_id,
+					optionsRadios	: req.session.req.body.optionsRadios,
+					count			: count,
+					images_id		: image
+				}, function(e, o){
+					if (e){
+						res.send(e, 400);
+					}	else{
+						// console.log("to _db:"+count);
+						// console.log("to _db:"+images_id);
+			        // res.redirect('/show_images');
+					}
+				});
+			}
+		}
+					main_show_bills(req.session.user.user_id,bill_id,res);
+					// res.redirect('/show_bills');
+				}
+
+	});
 	app.post('/submit_item', function(req, res) {
 	    console.log(req.body);
 
 		DM.create_bills({
-			bill_id : req.body.billid,
+			user_id : req.session.user.user_id,
 			imagepath 	: req.param('imagepath'),
 			email 	: req.param('email'),
 			user 	: req.param('user'),
