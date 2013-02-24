@@ -14,12 +14,12 @@ div.container
 			img#logo(style="position:absolute;top:0px;left:0;border:0;", src="img/logo.png", alt="have a nice day!")
 
 div.container-fluid
-	form(method='post', action='/add_bills', enctype='multipart/form-data')
+	form(method='post', name='alipayment', action='http://happyecard.com:8080/cart/alipayapi.php', enctype='multipart/form-data')
 		div.row-fluid
 			#top-sperater-setup 
 			div.span8
 			div.span2
-				a#btn.btn-large.btn-warning(href='/item') 付款
+				button(type="submit")#btn.btn-large.btn-warning 付款
 		hr
 
 		div.row-fluid
@@ -79,9 +79,16 @@ div.container-fluid
 							td
 								div.input-append
 									input.input-xlarge.disabled(type='text', value='#{bills[i].count}', style="width:30px;text-align:center", disabled)
-									input(type="hidden",name="image_#{i}", value='#{bills[i].images_id}')
-									input(type="hidden",name="list_length", value='#{bills.length}')
-
+									input(type="hidden",name="WIDout_trade_no", value='#{bills[i].bills_id}')
+									input(type="hidden",name="WIDsubject", value='贺卡')
+									input(type="hidden",name="WIDprice", value='#{price}')
+									input(type="hidden",name="WIDbody", value='http://happyecard.com')
+									input(type="hidden",name="WIDshow_url", value='http://happyecard.com')
+									input(type="hidden",name="WIDreceive_name", value='#{addresses.r_name}')
+									input(type="hidden",name="WIDreceive_address", value='addresses.r_address')
+									input(type="hidden",name="WIDreceive_zip", value='addresses.r_zip')
+									input(type="hidden",name="WIDreceive_phone", value='addresses.r_phone')
+									input(type="hidden",name="WIDreceive_mobile", value='addresses.r_phone')
 include footer
 include modals/alert
 include modals/confirm
