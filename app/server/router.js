@@ -17,30 +17,37 @@ function main_show_bills(user_id, bills_id,res)
 					console.log(user_id);
 					console.log(bills_id);
 
-		DM.images.find({user_id:user_id}).toArray(function(error, image_list){
-					// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-					// console.log(results);
-					// console.log(results.length);
-				//	console.log(results[1].bill_id);
-		DM.addresses.find({user_id:user_id}).toArray(function(error, addresses){
-					DM.bills.find({bills_id:bills_id}).toArray(function(error, bills){
-					// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		DM.bills.find({child:bills_id}).toArray(function(error, packageinfo){
+			DM.addresses.find({user_id:user_id}).toArray(function(error, addresses){
+					DM.bills.find({bill_id:bills_id}).toArray(function(error, bills){
 					console.log(bills);
 					console.log("bills");
+					console.log("packageinfo");
+					console.log(packageinfo);
+					var count=0;
+					for(i=0;i<bills.length;i++)
+					{
+						count += eval(bills[i].count);
+					}
+					price = count*2+eval(packageinfo[0].shipway);
+					// console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 					res.render('show_bills', {
 						locals: {
-							title : '用户设置',
-							countries : CT,
+							title : "订单",
+							statu : packageinfo[0].statu,
+							shipway : packageinfo[0].shipway,
+							date : packageinfo[0].date,
 							udata : "user",
-							img_list: image_list,
+							packageinfo :packageinfo,
+							count : count,
+							// img_list: image_list,
 							addresses: addresses[0],
 							bills: bills
 								}
 							});
-				});
-
+					});
+			});
 		});
-				});
 }
 module.exports = function(app) {
 
@@ -443,7 +450,6 @@ module.exports = function(app) {
 					// console.log('数量：'+count);
 			{
 				DM.create_bills({
-					user_id			: req.session.user.user_id,
 					bill_id			: bill_id,
 					optionsRadios	: req.session.req.body.optionsRadios,
 					count			: count,
@@ -459,6 +465,18 @@ module.exports = function(app) {
 				});
 			}
 		}
+				DM.create_bills({
+					price   	: 10,//to do 
+					shipway		: req.session.req.body.optionsRadios,
+					statu		: 0,
+					child 		: bill_id
+				}, function(e, o){
+					if (e){
+						res.send(e, 400);
+					}	else{
+					}
+				});
+
 					main_show_bills(req.session.user.user_id,bill_id,res);
 					// res.redirect('/show_bills');
 				}

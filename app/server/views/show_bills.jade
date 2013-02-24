@@ -23,23 +23,22 @@ div.container-fluid
 		hr
 
 		div.row-fluid
+			div.span1
 			div.span10
 				div.well
 					div.alert.alert-info
 						div.row
 							div.span4.offset1
-								h4 订单信息 （订单号：#{addresses.r_zip})
+								h4 订单信息 （订单号：#{packageinfo[0].child})
 								hr
-								div(id='mun')贺卡份数：0份
+								div(id='mun')贺卡份数：#{count}份
 								p 大小    ： 标准信封 16cm*10cm
-								p 邮寄方式：
+								p 邮寄费用：#{shipway} 元
 								label.radio(style="color:#468847;")
-									input(type='radio', id="optionsRadios1", name="optionsRadios", onmouseup="calc();", value="3", checked) 
 									p() 平邮（3元邮递费用，无保障）
-									input(type='radio', id="optionsRadios2", name="optionsRadios", value="12",onmouseup="calc();") 
 									p 快递（12元邮递费用，有保障）
 								hr
-								h4(id='price',style="color:#F89406;")支付总金额：0元
+								h4(id='price',style="color:#F89406;")支付总金额：#{price}元
 								hr
 							div.span4
 								h4 邮寄地址信息
@@ -54,6 +53,7 @@ div.container-fluid
 								p寄件人姓名：#{addresses.p_name}
 								p寄件人电话：#{addresses.p_phone}
 		div.row-fluid
+			div.span1
 			div.span10
 				table.table.table-bordered(style='background:#FBEED5;')
 					thead
@@ -62,25 +62,25 @@ div.container-fluid
 							th(style='width:400px') 贺卡预览
 							th 其他信息
 							th(style='width:20px') 数量
-					- for (var i = 0; i < img_list.length; i++)
+					- for (var i = 0; i < bills.length; i++)
 						tr
 							td
 								span.badge.badge-warning
 									=i+1
 								//input(type = 'checkbox')
 							td(style="background:url(img/card-preview-s.jpg) no-repeat; height:275px;")
-								img#img_list(src='#{img_list[i].imagepath}', alt="have a nice day!", style="width:150px; height:150px; margin-top:39px;margin-left:23px;float:left;")
-								p(style="height:160px; width:160px; margin-top:39px;margin-left:203px;word-wrap: break-word;") #{img_list[i].text}
+								img#img_list(src='cut/#{bills[i].images_id}.jpg', alt="have a nice day!", style="width:150px; height:150px; margin-top:39px;margin-left:23px;float:left;")
+								p(style="height:160px; width:160px; margin-top:39px;margin-left:203px;word-wrap: break-word;") #{bills[i].length}
 							td
 								p 图片编号：
-								p #{img_list[i].images_id}
+								p #{bills[i].images_id}
 								p 生成日期：
-								p #{img_list[i].date}
+								p #{bills[i].date}
 							td
 								div.input-append
-									input.input-xlarge.disabled(type='text', value='1', style="width:30px;text-align:center", disabled)
-									input(type="hidden",name="image_#{i}", value='#{img_list[i].images_id}')
-									input(type="hidden",name="list_length", value='#{img_list.length}')
+									input.input-xlarge.disabled(type='text', value='#{bills[i].count}', style="width:30px;text-align:center", disabled)
+									input(type="hidden",name="image_#{i}", value='#{bills[i].images_id}')
+									input(type="hidden",name="list_length", value='#{bills.length}')
 
 include footer
 include modals/alert
