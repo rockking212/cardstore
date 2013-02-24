@@ -467,7 +467,7 @@ module.exports = function(app) {
 		}
 				DM.create_bills({
 					price   	: 10,//to do 
-					shipway		: req.session.req.body.optionsRadios,
+					shipway		: req.session.req.body.shipway[0],
 					statu		: 0,
 					child 		: bill_id
 				}, function(e, o){

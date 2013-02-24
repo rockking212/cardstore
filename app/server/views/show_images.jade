@@ -112,7 +112,7 @@ div.container-fluid
 									button(type="button", onmouseup="document.getElementById('count#{i}').value++;calc();")#btn +
 									input(type="hidden",name="image_#{i}", value='#{img_list[i].images_id}')
 									input(type="hidden",name="list_length", value='#{img_list.length}')
-
+									input(type="hidden",name="shipway", id="shipway", value='0')
 script(type='text/javascript')
 	function calc() {
 		var total_price = 0;
@@ -123,6 +123,7 @@ script(type='text/javascript')
 				chac = "input[name='count" + i+"']";
 				total_price += parseInt($(chac).val());
 			}
+		document.getElementById('shipway').value = q1;
 		$("#mun").html('贺卡份数：'+total_price+'份');
 		// $("#price").html('总金额：'+q1+'元'+"+"+total_price*3+'元'+'='+(total_price*3+q1)+'元');
 		$("#price").html('总金额：'+(total_price*2+q1)+'元');
