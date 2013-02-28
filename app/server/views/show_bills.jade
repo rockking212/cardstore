@@ -79,16 +79,16 @@ div.container-fluid
 							td
 								div.input-append
 									input.input-xlarge.disabled(type='text', value='#{bills[i].count}', style="width:30px;text-align:center", disabled)
-									input(type="hidden",name="WIDout_trade_no", value='#{bills[i].bills_id}')
+									input(type="hidden",name="WIDout_trade_no", value='#{packageinfo[0].child}')
 									input(type="hidden",name="WIDsubject", value='贺卡')
 									input(type="hidden",name="WIDprice", value='#{price}')
 									input(type="hidden",name="WIDbody", value='http://happyecard.com')
 									input(type="hidden",name="WIDshow_url", value='http://happyecard.com')
 									input(type="hidden",name="WIDreceive_name", value='#{addresses.r_name}')
-									input(type="hidden",name="WIDreceive_address", value='addresses.r_address')
-									input(type="hidden",name="WIDreceive_zip", value='addresses.r_zip')
-									input(type="hidden",name="WIDreceive_phone", value='addresses.r_phone')
-									input(type="hidden",name="WIDreceive_mobile", value='addresses.r_phone')
+									input(type="hidden",name="WIDreceive_address", value='#{addresses.r_address}')
+									input(type="hidden",name="WIDreceive_zip", value='#{addresses.r_zip}')
+									input(type="hidden",name="WIDreceive_phone", value='#{addresses.r_phone}')
+									input(type="hidden",name="WIDreceive_mobile", value='#{addresses.r_phone}')
 include footer
 include modals/alert
 include modals/confirm
